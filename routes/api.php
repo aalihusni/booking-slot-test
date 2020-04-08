@@ -17,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::middleware('api')->get('/appointment','AppointmentController@index');
+Route::middleware('api')->post('/appointment','AppointmentController@store');
+Route::middleware('api')->put('/appointment','AppointmentController@update');
+Route::middleware('api')->delete('/appointment','AppointmentController@destroy');
