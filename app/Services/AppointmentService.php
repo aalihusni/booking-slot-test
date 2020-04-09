@@ -30,6 +30,19 @@ class AppointmentService
         return $submitDate->gt($another21Days);
     }
 
+    public function avoidMultipleEntry($payload)
+    {
+        $entry = $this->model->where('inspection_time_start', $payload['inspection_time_start'])
+            ->where('first_name', $payload['first_name'])
+            ->where('last_name', $payload['last_name'])
+            ->where('car_plate', $payload['car_plate'])->count();
+
+        if ($entry > 0) {
+            return false;
+        }
+        return true;
+    }
+
     public function checkSlot($inspectionTime)
     {
         if ($inspectionTime->isWeekend()) {
@@ -80,6 +93,12 @@ class AppointmentService
             return [
                 'status' => false,
                 'message' => 'Invalid date',
+            ];
+        }
+        if (!$this->avoidMultipleEntry($payload)) {
+            return [
+                'status' => false,
+                'message' => 'Book for the same user',
             ];
         }
 
