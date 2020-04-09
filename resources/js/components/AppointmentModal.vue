@@ -1,5 +1,6 @@
 <template>
     <div class="modal" v-show="value">
+        {{ output }}
         <div class="container">
             <div class="modal__title">Add New Appointment</div>
             <form @submit="formSubmit">
@@ -35,12 +36,16 @@
 
 <script>
     import Datepicker from "vuejs-datepicker/dist/vuejs-datepicker.esm.js";
-    import VueTimepicker from 'vue2-timepicker/src/vue-timepicker.vue'
+    import VueTimepicker from 'vue2-timepicker/src/vue-timepicker.vue';
+    import Toasted from 'vue-toasted';
+
+    Vue.use(Toasted);
 
     export default {
         components: {
             Datepicker,
-            VueTimepicker
+            VueTimepicker,
+
         },
         data() {
             return {
@@ -84,17 +89,17 @@
                 e.preventDefault();
                 let currentObj = this;
                 this.axios.post('http://booking.test/api/appointment', {
-                    first_name: this.first_name,
-                    last_name: this.last_name,
-                    car_plate: this.car_plate,
-                    appointment_date: this.appointment_date,
-                    appointment_time: this.appointment_time,
+                    first_name: currentObj.first_name,
+                    last_name: currentObj.last_name,
+                    car_plate: currentObj.car_plate,
+                    appointment_date: currentObj.appointment_date,
+                    appointment_time: currentObj.appointment_time,
                 })
                     .then(function (response) {
-                        currentObj.output = response.data;
+                        currentObj.$toasted.show(response.data.message, {type: 'info'}).goAway(1500);
                     })
                     .catch(function (error) {
-                        currentObj.output = error;
+                        currentObj.$toasted.show(error, {type: 'error'}).goAway(1500);
                     });
             }
         }

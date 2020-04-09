@@ -24,28 +24,7 @@
         components: {VueCal},
         data: () => ({
             showModal: false,
-            events: [
-                //slot 1 first 30mins
-                //slot 2 30minutes after first 30mins
-                {
-                    start: '2020-04-07 10:30',
-                    end: '2020-04-07 11:30',
-                    // You can also define event dates with Javascript Date objects:
-                    // start: new Date(2018, 11 - 1, 16, 10, 30),
-                    // end: new Date(2018, 11 - 1, 16, 11, 30),
-                    title: 'Doctor appointment',
-                    content: '',
-                    class: 'health'
-                }, {
-                    start: '2020-04-07 11:30',
-                    end: '2020-04-07 12:30',
-                    // You can also define event dates with Javascript Date objects:
-                    // start: new Date(2018, 11 - 1, 16, 10, 30),
-                    // end: new Date(2018, 11 - 1, 16, 11, 30),
-                    title: 'Doctor appointment2',
-                    content: '',
-                    class: 'health'
-                },]
+            events: []
         }),
         computed: {
             minDate() {
